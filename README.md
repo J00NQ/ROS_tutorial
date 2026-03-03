@@ -42,7 +42,7 @@ catkin_make
 ### /turtle1/cmd_vel (geometry_msgs/Twist)
 
 거북이에게 보내는 속도 명령
-
+```c
 linear: 
   x: 2.0
   y: 0.0
@@ -51,29 +51,30 @@ angular:
   x: 0.0
   y: 0.0
   z: 0.0
-
+```
 ### /turtle1/pose (turtlesim/Pose)
 
 거북이의 현재 위치와 방향
-
+```c
 x: 5.6494669914245605
 y: 5.448278903961182
 theta: -1.482805848121643
 linear_velocity: 0.0
 angular_velocity: 0.0
-
+```
 ### /turtle1/color_sensor (turtlesim/Color)
 
 거북이 발 아래의 배경 색상
-
+```c
 r: 179
 g: 184
 b: 255
+```
 
-
-## rostopic pub으로 정사각형 그리기
-
+## 4. rostopic pub으로 정사각형 그리기
+```bash
 rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist
+```
 
 ```bash
 rostopic echo /turtle1/cmd_vel
@@ -82,6 +83,7 @@ rostopic echo /turtle1/cmd_vel
  rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 0.0]'    # 직진
  rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- '[0.0, 0.0, 0.0]' '[0.0, 0.0, 1.5708]' # 반시계방향으로 약 90도 회전
 ```
+```c
 linear: 
   x: 2.0
   y: 0.0
@@ -217,3 +219,83 @@ angular:
   y: 0.0
   z: 0.0
 ---
+```
+
+## 5. turtlesim 2개 동시 실행
+
+```bash
+rosrun turtlesim turtlesim_node                         # 기본 터틀심 실행
+rosrun turtlesim turtlesim_node __name:=my_turtle       # my_turtle 실행
+```
+
+```bash
+rosnode list
+```
+출력
+```
+/my_turtle/turtle1/cmd_vel
+/my_turtle/turtle1/color_sensor
+/my_turtle/turtle1/pose
+/rosout
+/rosout_agg
+/turtle1/cmd_vel
+/turtle1/color_sensor
+/turtle1/pose
+```
+
+### 동시 제어?
+```bash
+rosrun turtlesim turtle_teleop_key
+rostopic info /turtle1/cme_vel
+```
+```
+rostopic info /turtle1/cmd_vel
+Type: geometry_msgs/Twist
+
+Publishers: None
+
+Subscribers: 
+ * /turtle1 (http://ubuntu:36093/)
+ * /turtlesim (http://ubuntu:43887/)
+ * /my_turtle (http://ubuntu:34133/)
+```
+- 두 터틀심이 같은 토픽을 구독하고있어서 동시에 움직임
+
+### name 대신 ns(namespace) 사용
+```bash
+rosrun turtlesim turtlesim_node __ns:=my_turtle
+$ rosnode list
+```
+```
+/my_turtle
+/my_turtle/turtlesim
+/rosout
+/rostopic_11583_1772526821846
+/turtle1
+/turtlesim
+```
+구독 정보 비교
+```bash
+$ rostopic info /my_turtle/turtle1/cmd_vel
+```
+```
+Type: geometry_msgs/Twist
+
+Publishers: None
+
+Subscribers: 
+ * /my_turtle/turtlesim (http://ubuntu:38815/)
+```
+```bash
+$ rostopic info /turtle1/cmd_vel
+```
+```
+Type: geometry_msgs/Twist
+
+Publishers: None
+
+Subscribers: 
+ * /turtle1 (http://ubuntu:36093/)
+ * /my_turtle (http://ubuntu:34133/)
+ * /turtlesim (http://ubuntu:34001/)
+ ```
