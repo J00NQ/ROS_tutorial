@@ -5,7 +5,7 @@ from geometry_msgs.msg import Twist
 
 def circle():
     pub = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=10)
-    rospy.init_node('circle_pub')
+    rospy.init_node('turtle_pub')
     rate = rospy.Rate(1)  # 1Hz = 1초에 1번
     msg = Twist()
     msg.linear.x = 2.0
