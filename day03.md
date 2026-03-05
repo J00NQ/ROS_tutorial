@@ -176,24 +176,25 @@ topics:      /turtle1/cmd_vel   14 msgs    : geometry_msgs/Twist
 ```bash
 rosbag play cmd_only.bag
 ```
-[x] 거북이가 움직이나요?
 
-[x] rostopic echo /turtle1/pose를 실행하면 데이터가 나오나요?
+- [x] 거북이가 움직이나요?
 
-체크리스트
+- [x] rostopic echo /turtle1/pose를 실행하면 데이터가 나오나요?
 
-[x] rosbag record -O로 파일 이름을 지정하여 기록했나요?
+### 체크리스트
 
-[x] rosbag info로 기록 시간, 토픽, 메시지 수를 확인했나요?
+- [x] rosbag record -O로 파일 이름을 지정하여 기록했나요?
 
-[x] rosbag play로 재생 시 거북이가 같은 경로로 움직이나요?
+- [x] rosbag info로 기록 시간, 토픽, 메시지 수를 확인했나요?
 
-[x] -r 옵션으로 배속 재생이 되나요?
+- [x] rosbag play로 재생 시 거북이가 같은 경로로 움직이나요?
 
-[x] -l 옵션으로 반복 재생이 되나요?
+- [x] -r 옵션으로 배속 재생이 되나요?
 
-[x] 스크린샷을 day03.md에 마크다운 이미지로 첨부했나요?
+- [x] -l 옵션으로 반복 재생이 되나요?
 
-[x] rosbag play 중 Subscriber가 데이터를 수신하나요?
+- [x] 스크린샷을 day03.md에 마크다운 이미지로 첨부했나요?
 
-[x] (도전) 전체 기록과 선택 기록의 파일 크기 차이를 확인했나요?
+- [x] rosbag play 중 Subscriber가 데이터를 수신하나요?
+
+- [x] (도전) 전체 기록과 선택 기록의 파일 크기 차이를 확인했나요?
