@@ -1,5 +1,7 @@
 # Day 3 실습 결과
 
+# 실습 1: 거북이 움직임 기록 및 재생
+
 ## rosbag record
 
 ![rosbag record 중 거북이 경로](screenshots/rosbag_record.png)
@@ -87,3 +89,85 @@ rosbag play가 시작되면 Subscriber에 위치 데이터가 출력되나요?
 
 rosbag play가 끝나면 Subscriber도 데이터 수신이 멈추나요?
 - 데이터 수신이 계속됨
+
+
+# 실습 3: 선택적 기록과 필터링 (도전)
+
+## 1단계: 전체 기록 vs 선택 기록
+turtlesim + teleop이 실행 중인 상태에서 두 가지 방식으로 기록합니다:
+
+### 방법 A: 모든 토픽 기록
+
+```
+ubuntu20@ubuntu:~/catkin_ws/src/bagfiles$ rosbag record -a -O all_topics.bag --duration=10
+
+[INFO] [1772698807.895801327]: Recording to 'all_topics.bag'.
+[INFO] [1772698807.897365803]: Subscribing to /rosout_agg
+[INFO] [1772698807.899636439]: Subscribing to /rosout
+[INFO] [1772698807.901929610]: Subscribing to /turtle1/pose
+[INFO] [1772698807.904054248]: Subscribing to /turtle1/color_sensor
+Error in XmlRpcClient::writeRequest: write error (Connection refused).
+Error in XmlRpcClient::writeRequest: write error (Connection refused).
+Error in XmlRpcClient::writeRequest: write error (Connection refused).
+
+ubuntu20@ubuntu:~/catkin_ws/src/bagfiles$ ls
+
+all_topics.bag  my_turtle.bag
+
+ubuntu20@ubuntu:~/catkin_ws/src/bagfiles$ rosbag info all_topics.bag 
+
+path:        all_topics.bag
+version:     2.0
+duration:    10.0s
+start:       Mar 05 2026 00:27:20.63 (1772699240.63)
+end:         Mar 05 2026 00:27:30.61 (1772699250.61)
+size:        94.3 KB
+messages:    1234
+compression: none [1/1 chunks]
+types:       geometry_msgs/Twist [9f195f881246fdfa2798d1d3eebca84a]
+             rosgraph_msgs/Log   [acffd30cd6b6de30f120938c17c593fb]
+             turtlesim/Color     [353891e354491c51aabe32df673fb446]
+             turtlesim/Pose      [863b248d5016ca62ea2e895ae5265cf9]
+topics:      /rosout                   3 msgs    : rosgraph_msgs/Log  
+             /turtle1/cmd_vel          9 msgs    : geometry_msgs/Twist
+             /turtle1/color_sensor   611 msgs    : turtlesim/Color    
+             /turtle1/pose           611 msgs    : turtlesim/Pose
+
+```
+
+### 방법 B: cmd_vel만 기록
+
+```
+ubuntu20@ubuntu:~/catkin_ws/src/bagfiles$ rosbag record /turtle1/cmd_vel -O cmd_only --duration=10
+
+[INFO] [1772698962.539783414]: Subscribing to /turtle1/cmd_vel
+[INFO] [1772698962.543546342]: Recording to 'cmd_only.bag'.
+
+ubuntu20@ubuntu:~/catkin_ws/src/bagfiles$ ls
+
+all_topics.bag  cmd_only.bag  my_turtle.bag
+
+ubuntu20@ubuntu:~/catkin_ws/src/bagfiles$ rosbag info cmd_only.bag 
+
+path:        cmd_only.bag
+version:     2.0
+duration:    8.9s
+start:       Mar 05 2026 00:26:08.01 (1772699168.01)
+end:         Mar 05 2026 00:26:16.94 (1772699176.94)
+size:        7.3 KB
+messages:    14
+compression: none [1/1 chunks]
+types:       geometry_msgs/Twist [9f195f881246fdfa2798d1d3eebca84a]
+topics:      /turtle1/cmd_vel   14 msgs    : geometry_msgs/Twist
+
+```
+
+## 2단계: 두 파일 비교
+
+| 항목 | all_topics.bag | cmd_only.bag |
+|:---:|:---:|:---:|
+| 토픽 수 | 4 | 1 |
+| 메시지 수 | 1234 | 14 |
+| 파일 크기 | 94.3KB | 7.3KB |
+
+## 3단계: cmd_vel만 기록한 파일로 재생
