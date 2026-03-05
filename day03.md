@@ -84,10 +84,10 @@ float32 angular_velocity
 
 ## 3단계: rosbag play + Subscriber 연동
 
-[ ] rosbag play가 시작되면 Subscriber에 위치 데이터가 출력되나요?
+- [ ] rosbag play가 시작되면 Subscriber에 위치 데이터가 출력되나요?
 - 시작되기 전부터 출력됨
 
-[ ] rosbag play가 끝나면 Subscriber도 데이터 수신이 멈추나요?
+- [ ] rosbag play가 끝나면 Subscriber도 데이터 수신이 멈추나요?
 - 데이터 수신이 계속됨
 
 
