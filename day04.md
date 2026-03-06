@@ -46,7 +46,7 @@ mkdir action
 
 ### 1. Timer.action 작성
 
-- [Timer.action](action/Timer.action)
+- [Timer.action](beginner_tutorials/action/Timer.action)
 - 환경설정 적용
 ```bash
 cd ~/catkin_ws
@@ -60,8 +60,8 @@ rosmsg list | grep Timer
 
 ### 2. timer_server.py, timer_client.py 작성 및 권한 부여
 
-- [timer_server.py](scripts/timer_server.py)
-- [timer_client.py](scropts/timer_client.py)
+- [timer_server.py](beginner_tutorials/scripts/timer_server.py)
+- [timer_client.py](beginner_tutorials/scripts/timer_client.py)
 
 - 권한 부여
 ```bash
