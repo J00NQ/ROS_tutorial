@@ -198,3 +198,10 @@ rosbag play cmd_only.bag
 - [x] rosbag play 중 Subscriber가 데이터를 수신하나요?
 
 - [x] (도전) 전체 기록과 선택 기록의 파일 크기 차이를 확인했나요?
+
+
+```bash
+rostopic list
+rostopic type ___/___
+rosmsg show ___/___
+```
