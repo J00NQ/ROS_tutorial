@@ -90,16 +90,15 @@
    </xacro:macro>
 
    <xacro:macro name="transmission_block" params="joint_name">
-	  <transmission name="tran1">
-	    <type>transmission_interface/SimpleTransmission</type>
-	    <joint name="${joint_name}">
-	      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-	    </joint>
-	    <actuator name="motor1">
-	      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-	      <mechanicalReduction>1</mechanicalReduction>
-	    </actuator>
-	  </transmission>
+    <transmission name="trans_${joint_name}">  
+      <type>transmission_interface/SimpleTransmission</type>
+        <joint name="${joint_name}">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor_${joint_name}"> <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
    </xacro:macro>
 
 
